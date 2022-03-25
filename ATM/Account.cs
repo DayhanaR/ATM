@@ -21,21 +21,32 @@ namespace ATM
 
         public virtual void WithdrawalMoney(decimal money)
         {
-            if(Balance - money == 0)
-                Console.WriteLine("\nDinero insuficiente");
+            if ((Balance - money) <= 0)
+            {
+                Console.WriteLine($"\n******** ALERTA *******" +
+                                  $"\n* Dinero insuficiente *" +
+                                  $"\n***********************");
+
+            }
             else
             {
                 Balance -= money;
-                Console.WriteLine("\nDinero retirado correctamente");
+                Console.WriteLine($"\n|------------------------------|" +
+                                  $"\n| Dinero retirado correctamente|" +
+                                  $"\n|------------------------------|");
             }
         }
 
         public void AddMoney(decimal money)
         {
             Balance += money;
-            Console.WriteLine("\nDinero ingresado correctamente");
+            Console.WriteLine($"\n|-------------------------------|" +
+                              $"\n| Dinero ingresado correctamente|" +
+                              $"\n|-------------------------------|");
         }
 
 
     }
 }
+
+

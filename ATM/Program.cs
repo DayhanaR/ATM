@@ -11,14 +11,14 @@ namespace ATM
             {
                 Id = 1,
                 Name = "Cuenta de Ahorros",
-                Balance = 500000M,
+                Balance = 500000,
             };
 
             CIFAccount accountB = new CIFAccount()
             {
                 Id = 2,
                 Name = "Fiducuenta",
-                Balance = 1000000M,
+                Balance = 1000000,
             };
 
             User admin = new User()

@@ -35,12 +35,11 @@ namespace ATM
         public void Menu(User user)
         {
             int answer = 0;
-            bool flag = false;
-
             do
             {
                 try
                 {
+                     
                     Console.WriteLine($"\nBienvenid@, {user.Name} {user.LastName}" +
                                       $"\n" +
                                       $"\n================================" +
@@ -51,6 +50,7 @@ namespace ATM
                                       $"\n       2. Retirar dinero        " +
                                       $"\n       3. Consulta de saldo     " +
                                       $"\n       4. Cambio de clave       " +
+                                      $"\n       5. Salir                 " +
                                       $"\n                                " +
                                       $"\n================================" +
                                       $"\n                                " +
@@ -61,73 +61,75 @@ namespace ATM
                     switch (answer)
                     {
                         case 1:
-
                             int answerAdd = CheckAccount(user);
                             string moneyToAdd = string.Empty;
-
-                            do
-                            {
-                                Console.WriteLine($"¿Cuánto dinero desea ingresar?");
-                                moneyToAdd = Console.ReadLine();
-
-                                if (ValidateNumber(moneyToAdd))
-                                {
-                                    int moneyToAddNumber = ConvertNumber(moneyToAdd);
-                                    user.Accounts[answerAdd].AddMoney((decimal)moneyToAddNumber);
-                                }
-
-                            } while (!ValidateNumber(moneyToAdd));
-
+                            Console.WriteLine($"" +
+                                $"\n¿Cuánto dinero desea ingresar?");
+                            moneyToAdd = Console.ReadLine();
+                            int moneyToAddNumber = ConvertNumber(moneyToAdd);
+                            user.Accounts[answerAdd].AddMoney((decimal)moneyToAddNumber);
                             break;
 
                         case 2:
                             int answerRetire = CheckAccount(user);
                             string moneyToRetire = string.Empty;
-
-                            do
-                            {
-                                Console.WriteLine($"¿Cuánto dinero desea retirar?");
-                                moneyToRetire = Console.ReadLine();
-
-                                if (ValidateNumber(moneyToRetire))
-                                {
-                                    int moneyToRetireNumber = ConvertNumber(moneyToRetire);
-                                    user.Accounts[answerRetire].AddMoney((decimal)moneyToRetireNumber);
-                                }
-
-                            } while (!ValidateNumber(moneyToRetire));
-
+                            Console.WriteLine($"" +
+                                $"\n¿Cuánto dinero desea retirar?");
+                            moneyToRetire = Console.ReadLine();
+                            int moneyToRetireNumber = ConvertNumber(moneyToRetire);
+                            user.Accounts[answerRetire].WithdrawalMoney((decimal)moneyToRetireNumber);
                             break;
 
                         case 3:
                             int answerCheck = CheckAccount(user);
-                            Console.WriteLine(user.Accounts[answerCheck].GetBalance());
+                            Console.WriteLine($"" +
+                                $"\n{user.Accounts[answerCheck].GetBalance()}");
                             break;
 
                         case 4:
-                            Console.WriteLine("Ingrese la nueva contraseña");
-                            string newPassword = Console.ReadLine();
-                            user.ChangePassword(newPassword);
+                            Console.WriteLine("\nIngrese la contraseña actual:");
+                            string actualPassword = Console.ReadLine();
+
+                            if(actualPassword == user.Password)
+                            {
+                                Console.WriteLine("\nIngrese la nueva contraseña");
+                                string newPassword = Console.ReadLine();
+                                user.ChangePassword(newPassword);
+
+                                Console.WriteLine($"\nAntigua contraseña: {actualPassword}" +
+                                                  $"\nNueva contraseña: {newPassword}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"\n************ ALERTA ************ " +
+                                                  $"\n* Las contraseñas no coinciden *" +
+                                                  $"\n********************************");
+                            }
 
                             break;
 
+                        case 5:
+                            Console.WriteLine($"\n╔═══════════════════════════════════════╗" +
+                                              $"\n║ ¡Gracias por usar nuestros servicios! ║" +
+                                              $"\n╚═══════════════════════════════════════╝");
+                            return;
+
                         default:
-                            Console.WriteLine("\nPor favor seleccione una de las opciones del menu.");
+                            Console.WriteLine($"\n*********************** ALERTA **********************" +
+                                              $"\n* Por favor seleccione una de las opciones del menu *" +
+                                              $"\n*****************************************************");
                             break;
 
                     }
-                    flag = true;
-
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine($"\n*************** ALERTA ****************" +
                                       $"\n* Por favor ingrese una opción válida *" +
                                       $"\n***************************************");
-                    flag = false;
                 }
 
-            } while (!flag);
+            } while (true);
 
         }
 
@@ -151,6 +153,7 @@ namespace ATM
             int counter = 0;
             string answer = string.Empty;
             Console.WriteLine("\nEscoja el número de la cuenta");
+            Console.WriteLine("");
             foreach (var account in accounts)
             {
                 Console.WriteLine($"{counter + 1}. {account.Name}");
@@ -169,7 +172,9 @@ namespace ATM
             }
             catch (FormatException)
             {
-                Console.WriteLine("Por favor ingrese una opción válida");
+                Console.WriteLine($"\n*************** ALERTA ****************" +
+                                  $"\n* Por favor ingrese una opción válida *" +
+                                  $"\n***************************************");
                 return false;
             }
         }
