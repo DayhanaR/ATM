@@ -21,7 +21,9 @@ namespace ATM
         public void ChangePassword(string password)
         {
             Password = password;
-            Console.WriteLine("\nContraseña cambiada correctamente");
+            Console.WriteLine($"\n|----------------------------------|" +
+                              $"\n| Contraseña cambiada correctamente|" +
+                              $"\n|----------------------------------|");
         }
     }
 }

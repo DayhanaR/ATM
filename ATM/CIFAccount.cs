@@ -11,11 +11,15 @@ namespace ATM
         public override void WithdrawalMoney(decimal money)
         {
             if (Balance - money <= 50000)
-                Console.WriteLine("\nDinero insuficiente");
+                Console.WriteLine($"\n******** ALERTA *******" +
+                                  $"\n* Dinero insuficiente *" +
+                                  $"\n***********************");
             else
             {
                 Balance -= money;
-                Console.WriteLine("\nDinero retirado correctamente");
+                Console.WriteLine($"\n|------------------------------|" +
+                                  $"\n| Dinero retirado correctamente|" +
+                                  $"\n|------------------------------|");
             }
         }
     }
